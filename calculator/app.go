@@ -9,42 +9,42 @@
 package calculator
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
 )
 
 func main() {
-	fmt.Println("Hello, World")
-	SayHi("World")
-	args := os.Args
-	if 4 > len(args) {
-		fmt.Printf("Usage: '%s action, val...'\n\t=> must provide 2+ val\n\n", args[0])
-	} else {
-		action := os.Args[1]
-		numStr := os.Args[2:]
-		nums := make([]float32, 0, len(numStr))
-		for _, strVal := range numStr {
-			numVal, err := strconv.ParseFloat(strVal, 32)
-			if nil != err {
-				fmt.Printf("Could not parse value of '%s'!\n", strVal)
-			} else {
-				nums = append(nums, float32(numVal))
-			}
-		}
+	SayHi("User - I am your calculator!")
 
+	action, nums, err := checkArgs(os.Args)
+	if nil == err {
 		fmt.Printf("Will perform: '%s' on \n", action)
 		fmt.Println("\t", nums)
-
-		res, err := DoCalculate(action, nums)
-		if "" == err {
-			fmt.Println("Value: ", res)
-		} else {
-			fmt.Println(err)
+		result, err := DoCalculate(action, nums)
+		if nil == err {
+			fmt.Println("Value: ", result)
 		}
+	}
+	if nil != err {
+		fmt.Println(err)
 	}
 }
 
-func checkArgs() {
-
+func checkArgs(args []string) (action string, nums []float32, err error) {
+	if 4 > len(args) {
+		err = errors.New("Usage: '" + args[0] + " action, init, vals...'\n\t=> must provide 2+ vals\n\n")
+	}
+	if nil == err {
+		action = args[1]
+		var num float64
+		for _, val := range args[2:] {
+			num, err = strconv.ParseFloat(val, 32)
+			if nil == err {
+				nums = append(nums, float32(num))
+			}
+		}
+	}
+	return
 }

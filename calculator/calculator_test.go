@@ -5,17 +5,16 @@ import (
 )
 
 func TestSayHi(t *testing.T) {
-	cases := []struct {
-		in, expected string
+	for _, c := range []struct {
+		in string
 	}{
-		{"foo", "Hi foo"},
-		{"bar", "Hi bar"},
-		{"this is a LONG string", "Hi this is a LONG string"},
-	}
-	for _, c := range cases {
+		{"foo"},
+		{"bar"},
+		{"this is a LONG string"},
+	} {
 		got := SayHi(c.in)
-		if c.expected != got {
-			t.Errorf("ReverseRunes(%q) == %q, want %q", c.in, got, c.expected)
+		if (HiString + c.in) != got {
+			t.Errorf("SayHi(%q) == %q, want %q", c.in, got, HiString+c.in)
 		}
 	}
 }
