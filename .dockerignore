@@ -1,0 +1,5 @@
+# Ignore the following:
+.devcontainer
+.dockerignore
+Dockerfile
+*.md
