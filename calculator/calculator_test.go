@@ -1,18 +1,8 @@
-package calculator
+package main
 
 import (
-	"fmt"
-	"strings"
 	"testing"
 )
-
-func numsToString(nums []float32) string {
-	strs := make([]string, 0, len(nums))
-	for _, f := range nums {
-		strs = append(strs, fmt.Sprintf("%f", f))
-	}
-	return strings.Join(strs, ", ")
-}
 
 func TestSayHi(t *testing.T) {
 	for _, c := range []struct {

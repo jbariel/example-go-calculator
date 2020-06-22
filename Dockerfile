@@ -32,13 +32,18 @@ ARG OUT_FILE_NAME
 ENV OUT_FILE_NAME=${OUT_FILE_NAME}
 WORKDIR /go/src/${PROJECT_PATH}/
 COPY . .
-RUN ./scripts/build.sh
+RUN ./scripts/build.sh './calculator'
 
 FROM alpine:latest
 ARG PROJECT_PATH
 ARG OUT_FILE_NAME
-ENV OUT_FILE_NAME=${OUT_FILE_NAME}
-RUN apk -U --no-cache add ca-certificates
+# ||| jbariel TODO => try to get this working with env vars
+# ENV OUT_FILE_NAME=${OUT_FILE_NAME}
+# if you have to modify ${OUT_FILE_NAME} update this manually
+# There are some oddities about passing params to `sh -c` commands
+# and that is the only way to use the ENV variable
+ENTRYPOINT ["./app"]
 WORKDIR /runnable
 COPY --from=builder /go/src/${PROJECT_PATH}/${OUT_FILE_NAME} .
-CMD ["sh", "-c", "./${OUT_FILE_NAME}"]  
+RUN apk -U --no-cache add ca-certificates && \
+    chmod +x ${OUT_FILE_NAME}
