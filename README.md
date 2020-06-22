@@ -1,6 +1,11 @@
 # Golang calculator example
 Build out a calculator in golang to show structure and containerization.
 
+## Build the code
+From the root dir:
+
+`./scripts/build.sh`
+
 ## Build docker image
 `docker build -t 'calc:latest' .`
 

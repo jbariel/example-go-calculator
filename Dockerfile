@@ -29,9 +29,10 @@ ARG GOLANG_VERSION=1.14
 FROM golang:${GOLANG_VERSION} AS builder
 ARG PROJECT_PATH
 ARG OUT_FILE_NAME
+ENV OUT_FILE_NAME=${OUT_FILE_NAME}
 WORKDIR /go/src/${PROJECT_PATH}/
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ${OUT_FILE_NAME} ./cmd
+RUN ./scripts/build.sh
 
 FROM alpine:latest
 ARG PROJECT_PATH
