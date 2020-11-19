@@ -20,7 +20,7 @@ where:
 ```
   docker run --rm calc:latest add 0 1 2         // => 3
   docker run --rm calc:latest subtract 10 1 1   // => 8
-  docker run --rm calc:latest multiply 1 1 2 3  // => 30
+  docker run --rm calc:latest multiply 1 1 2 3  // => 6
   docker run --rm calc:latest divide 1 2        // => 0.5
 ```
 
